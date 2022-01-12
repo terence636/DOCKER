@@ -160,7 +160,7 @@ docker exec -it <container id> bash
 more /etc/hosts
 docker stop <dockerapp id>
 docker run -d -p 5001:5000 --link <redis id> dockerapp:v0.1
-``
+```
     
 # Automate Workflow with docker compose
 - Manual linking containers and configuring services become impractical when number of containers grow. Hence need docker compose
@@ -180,17 +180,74 @@ docker run -d -p 5001:5000 --link <redis id> dockerapp:v0.1
     - bridge
     - host
     - overlay
-- use docket network ls to list out type of networks
+## none network
+- docker network ls - to list out type of networks
 - none network is isolated container. It doesnt has access to outside world. The benefits is max network protection
 - to run none network, execute run as docker run -d **--net none** ....
+
+## bridge network
 - bridge network is similar to LAN. Run the docker network inspect bridge command to see the IP for diff containers and bridge gateway ip too
 - bridge network is the default network when run containers
 - Containers from 2 different bridge cant communicate with each other by default. How to connect them?
-- Use docket network connect .... (see doc)
+- Use docker network connect .... (see doc)
+
+## host network
+- adds a container on the host network. Same LAN with host
+- Called open containers
+- docker run -d --name container4 --net host busybox:latest
+- minimum network security level but high level of performance
+
+## overlay network
+- Supports. multi host networking out-of-the-box
+- Require some pre-existing conditions before it can be created
+    - Running docker engine in Swarm mode
+    - A key-value store such as consul
+    
 ```
 docker network ls
 docker network inspect bridge
 docker create --driver bridge my_another_bridge_network
 docker run -d --net my_another_bridge_network ... 
 docker network inspect my_another_bridge_network
+
+```
+
+## Example of network compose yml file with networking configuration
+```
+version: '2'
+
+services:
+    proxy:
+        build: ./proxy
+        networks: 
+            - front
+    app:
+        build: ./app
+        networks:
+            # you may set custom IP addresses
+            front:
+                ipv4_address: 172.16.238.10 
+                ipv6_address: "2001:3984:3989::10"
+            - back
+    db:
+        image: postgres
+        networks:
+            - back
+
+networks:
+    front:
+        # use the bridge driver, but enable IPv6
+        driver: bridge
+        driver_opts:
+            com.docker.network.enable_ipv6: "true"
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.238.0/24
+                gateway: 172.16.238.1
+                - subnet: "2001:3984:3989::/64"
+                gateway: "2001:3984:3989::1"
+    back:
+        # use a custom driver, with no options
+        driver: custom-driver-1
 ```
