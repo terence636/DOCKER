@@ -75,3 +75,55 @@
 - Run the new image
 - Check that git already installed
 
+## Using Docker file
+- Dockerfile is a text document that contains all the instructions users provide to assemble an image
+```
+FROM debian:latest
+RUN apt-get update
+RUN apt-get install -y git
+RUN apt-get install -y vim    
+```
+- docker build -t terencechan123/debian .
+- docker build command takes the path to the build context as an argmument. In the above it is the current directory
+- When build starts, docker client pack all files in the build context into a tarball then transfer the tarball file to the docker daemon
+- By default docker would search for the Dockerfile in the build context path. If not then need to provide a -f option
+- Each RUN command will execute the command on the top writable layer of the container, then commit the container as a new image.
+- The new image is used for the next step in the Dockerfile. So each RUN instruction will create a new image layer.
+- It is recommended to chain the RUN instructions in the Dockerfile to reduce the number of image layers it creates.
+    
+```
+FROM debian:latest
+RUN apt-get update && apt-get install -y git vim
+```
+- **CMD** instruction specifies what command you want to run when the container starts up.
+- If we don't specify CMD instruction in the Dockerfile, Docker will use the default command defined in the base image.
+- The CMD instruction doesn't run when building the image, it only runs when the container starts up.
+- You can specify the command in either exec form which is preferred or in shell form.
+```
+FROM debian:latest
+RUN apt-get update && apt-get install -y git vim
+CMD ["echo", "hello terence"]   
+```    
+
+## Docker Build Cache
+- Will not run the same instruction again if the build version is the same
+- To bypass cache use --no-cache=true option
+
+    
+## Docket COPY
+- We can use COPY command to copy our project files into the container
+  - e.g then do a npm install to install all dependencies and use the CMD to start the app when container starts
+    
+# Push images to docker hub
+- to change the name of images 
+```
+docker tag <image id> <dockerhub id>/<image name>:<tag>
+```
+- try not to use latest tag. 
+- login to docker hub and push
+```
+docker login --username=<dockerhub id>
+docker push <dockerhub id>/<image name>:<tag>
+```
+
+# Example of Containerized Web Application using Flask
