@@ -65,3 +65,13 @@
     
 # Build docker Image
 - 2 ways: (1) Commit changes made in a docker container (2) Write a dockerfile
+
+## Commit changes
+- For example run debian images
+- Install git into debian container
+- Exit the container and do a docker ps -a to get the container ID
+- Run docker commit <container id> <hub id>:<version>
+- Run docker images to see that the new image is created
+- Run the new image
+- Check that git already installed
+
