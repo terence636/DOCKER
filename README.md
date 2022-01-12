@@ -50,7 +50,7 @@
 - docker inspect \<container id> displays low level info abt container or image in JSON format
 
 ## Docker Port Mapping
-- docker run -it --rm -p 8888:8080 tomcat:latest (map the container port to 8888)
+- docker run -it --rm -p 8888:8080 tomcat:latest (map the container port to host port: 8888. Container port is 8080)
 
 ## Docker Logs
 - E.g docker run -it --rm -p -d 8888:8080 tomcat:latest will return the container's ID
@@ -142,3 +142,55 @@ CMD ["python", "app.py"]
 - Run docker build -t dockerapp:v0.1 . (this will build an image called dockerapp with version v0.1
 - docker run -it -d -p 5001:5000 dockerapp:v0.1 to run the container in the background with port mapping to 5001
 - The CMD will launch the python app.py once the container started
+    
+# Container Links
+- run 2 containers and link them together
+- For example run redis and run an app
+- docker ps to check the app and redis container id. Run the bash and check the etc/hosts file to see the DNS mapping
+- You will see that the container local private ip address is 172.17.0.3 for app and 172.17.0.2 for redis. both are in the private network
+- so how to inform both dockerapp container to know redis ip address? Use container links    
+- stop the dockerapp 
+- link redis to dockerapp using --link flag. Check dockerapp hosts file again to confirm
+- The advantage here is we do not need to expose redis ip
+```
+docker run -d dockerapp:v0.1
+docker run -d redis:latest
+docker ps
+docker exec -it <container id> bash
+more /etc/hosts
+docker stop <dockerapp id>
+docker run -d -p 5001:5000 --link <redis id> dockerapp:v0.1
+``
+    
+# Automate Workflow with docker compose
+- Manual linking containers and configuring services become impractical when number of containers grow. Hence need docker compose
+- Docker compose is like "network switch" in LAN. It consists of a yml file that spelt out the details of linking and dependencies and configuration of containers
+- to start all containers, run docker-compose up
+- run docker-compose ps or docker ps to check all containers are up and runnning
+- run docker-compose logs to see the logs 
+- docker-compose logs <container id> to see logs for that particular container
+- docker-compose logs -f to tail the logs
+- docker-compose stop without removing the containers
+- docker-compose rm to stop and remove all containers
+- docker-compose up will not build the images if already exist. When changes on Dockerfile and to rebuild image, use docker-compose build
+
+# Docker Networking
+- 4 types of network
+    - none
+    - bridge
+    - host
+    - overlay
+- use docket network ls to list out type of networks
+- none network is isolated container. It doesnt has access to outside world. The benefits is max network protection
+- to run none network, execute run as docker run -d **--net none** ....
+- bridge network is similar to LAN. Run the docker network inspect bridge command to see the IP for diff containers and bridge gateway ip too
+- bridge network is the default network when run containers
+- Containers from 2 different bridge cant communicate with each other by default. How to connect them?
+- Use docket network connect .... (see doc)
+```
+docker network ls
+docker network inspect bridge
+docker create --driver bridge my_another_bridge_network
+docker run -d --net my_another_bridge_network ... 
+docker network inspect my_another_bridge_network
+```
