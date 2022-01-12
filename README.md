@@ -31,13 +31,13 @@
 
 # Docker Container's CMD
 (Try it at terminal when docker is running)
-- docker pull <image name> (download image)
+- docker pull \<image name> (download image)
 - docker info (system wide info about docker)
 - docker images (list out available images in local box)
-- docker run <image name>:<tag> (if the image is not in local box, docker will download from remote docker registry)
+- docker run \<image name>:<tag> (if the image is not in local box, docker will download from remote docker registry)
   - e.g. docker run busybox:latest echo "hello world" (busybox The Swiss Army Knife of Embedded Linux)
   - docker run spin up a new image
-- docker run -i -t <image name>:<tag>
+- docker run -i -t \<image name>:<tag>
   - i flag starts an interactive container
   - t flag creates a pseudo-TTY that attached stdin and stdout
 - docker ps (showing the current active containers)
@@ -47,14 +47,14 @@
 - docker run --rm flag removes the container after it becomes inactive
 - docker run --name creates a name for the docker. Or else is randomly assigned
   e.g. docker run --name terence busybox:latest
-- docker inspect <container id> displays low level info abt container or image in JSON format
+- docker inspect \<container id> displays low level info abt container or image in JSON format
 
 ## Docker Port Mapping
 - docker run -it --rm -p 8888:8080 tomcat:latest (map the container port to 8888)
 
 ## Docker Logs
 - E.g docker run -it --rm -p -d 8888:8080 tomcat:latest will return the container's ID
-  Do a docker logs <container's ID> to see the logs
+  Do a docker logs \<container's ID> to see the logs
 
 # Working with Docker Images
 - An image consist of multiple layers
@@ -70,7 +70,7 @@
 - For example run debian images
 - Install git into debian container
 - Exit the container and do a docker ps -a to get the container ID
-- Run docker commit <container id> <hub id>:<version>
+- Run docker commit \<container id> \<hub id>:<version>
 - Run docker images to see that the new image is created
 - Run the new image
 - Check that git already installed
