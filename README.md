@@ -64,3 +64,4 @@
 - Those R/W layers will be removed once the container is destroyed
     
 # Build docker Image
+- 2 ways: (1) Commit changes made in a docker container (2) Write a dockerfile
