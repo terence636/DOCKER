@@ -127,3 +127,18 @@ docker push <dockerhub id>/<image name>:<tag>
 ```
 
 # Example of Containerized Web Application using Flask
+- Below is Dockerfile
+- FROM is inidicating the base images used. If the image is not avail locally it will download from remote registry
+```
+FROM python:3.5
+RUN pip install Flask==0.11.1
+RUN useradd -ms /bin/bash admin
+USER admin
+WORKDIR /app
+COPY app /app
+CMD ["python", "app.py"]     
+```
+- The app.py is inside a folder called app that is same directory with Dockerfile. COPY app /app will copy content of app folder from current directory to container /app directory
+- Run docker build -t dockerapp:v0.1 . (this will build an image called dockerapp with version v0.1
+- docker run -it -d -p 5001:5000 dockerapp:v0.1 to run the container in the background with port mapping to 5001
+- The CMD will launch the python app.py once the container started
