@@ -114,5 +114,9 @@ COPY --from=builder /app/build .
 # Containers run nginx with global directives and daemon off
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
-
 ```
+- docker build --no-cache -t <app-name>:<tag>
+- docker images (to check image is build)
+- docker run --rm -it -p 8080:80 <app-name>:<tag>
+- docker ps (to check docker container is active and running)
+- go to browser localhost:8080
