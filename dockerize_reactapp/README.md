@@ -6,7 +6,7 @@
 5. Why Multi-Stage Docker Builds are better
 
 ## Prerequisites
-1. Docker: To check if it is installed or not, rundocker -v command
+1. Docker: To check if it is installed or not, run docker -v command
 2. Node.js: To check if it is installed or not, run node -v command
 3. Docker Hub account(optional): if you want to publicly share your application by pull and push Docker images.
 4. React.js application
@@ -39,4 +39,38 @@ EXPOSE 3000
 CMD ["npm", "start"]
 ```
 
+**STEP 2:**
+- Create a dockerignore file in the main folder named .dockerignore without any extension
+```
+/node_modules
+/build
+.git
+*.md
+.gitignore
+```
 
+**STEP 3:**
+- Create React Application docker image from the dockerfile
+  - ensure docker engine is started before building the app
+```
+docker build -t <app-name>
+```
+  - if wanna push to remote docker registry such as dockerhub
+```
+docker build -t <hub-user>/<app-name>[:<tag>]
+
+e.g docker build -t myhub/myapp:v1.0
+```
+
+**STEP 4:**
+- Run and test the docker container
+```
+docker run -rm -it -p 3000:3000 myapp
+```
+- Open http://localhost:3000 to view your application in the browser
+
+**STEP 5:** (Optional)
+- Push Docker image to dockerhub
+```
+docker push <hub-user>/<app-name>:<tag>
+```
