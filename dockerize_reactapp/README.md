@@ -61,6 +61,7 @@ docker build -t <hub-user>/<app-name>[:<tag>]
 
 e.g docker build -t myhub/myapp:v1.0
 ```
+- run docker images to list out all images at local repo and ensure your app images is avail
 
 **STEP 4:**
 - Run and test the docker container
