@@ -79,3 +79,5 @@ Server:
 **STEP 3:** Launch a docker container from dockerhub
 - Docker image use from dockerhub => terencechan123/stockcharting-nginx-amd64:1.0
 - docker run -d -p 80:80 terencechan123/stockcharting-ngnix-amd64:1.0
+ - docker daemon will auto pull image from dockerhub and lauch the container
+ - Access the container using EC2 public address and ensure port 80 is allow access by EC2 security group
