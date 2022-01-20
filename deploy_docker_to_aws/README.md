@@ -4,6 +4,7 @@
 - Docker images build by M1 Macbook will not work on AWS EC2. Reason because M1 would create linux/arm64 images which work on machines
 that are using ARM architecture. But intel machines on AWS uses AMD architecture. 
 - Therefore, for M1 machine use the **--platform linux/amd64** option to build the docker image
+- https://dev.to/lakhansamani/create-docker-image-on-apple-silicon-m1-mac-2f75
 
 ## What is EC2 instance?
 - An EC2 instance is nothing but a virtual server in Amazon Web services terminology.
