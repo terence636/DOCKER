@@ -107,8 +107,8 @@ CMD ["echo", "hello terence"]
 
 ## Docker Build Cache
 - Will not run the same instruction again if the build version is the same
-- To bypass cache use --no-cache=true option
-
+- To bypass cache use --no-cache option
+- E.g docker build --no-cache -t <app-name> .
     
 ## Docket COPY
 - We can use COPY command to copy our project files into the container
