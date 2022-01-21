@@ -117,7 +117,7 @@ ENTRYPOINT ["nginx", "-g", "daemon off;"]
 ```
 - docker build --no-cache -t <app-name>:<tag>
 - docker images (to check image is build)
-- docker run --rm -it -p 8080:80 \<app-name>:<tag>
+- docker run --rm -it -p 8080:80 \<app-name>:\<tag>
 - docker ps (to check docker container is active and running)
 - go to browser localhost:8080
 - docker exec -it <container id> bash (to run bash inside the container. the id can get from docker ps)
