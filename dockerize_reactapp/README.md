@@ -3,7 +3,6 @@
 2. Create React application Docker image from the Dockerfile
 3. Push the Docker Image to the Docker Hub
 4. Run the Docker Container
-5. Why Multi-Stage Docker Builds are better
 
 ## Prerequisites
 1. Docker: To check if it is installed or not, run docker -v command
