@@ -2,7 +2,7 @@
 
 # Installation
 - Download docker from docker website
-- Install it an run
+- Install it and run
 - A whale image will appear above the notification bar. Click and ensure status shows running
 
 # Concept
