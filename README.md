@@ -92,7 +92,7 @@ RUN apt-get install -y git
 RUN apt-get install -y vim    
 ```
 - docker build -t terencechan123/debian .
-- docker build command takes the path to the build context as an argmument. In the above it is the current directory
+- docker build command takes the path to the build context as an argument. In the above it is the current directory as shown by the "."
 - When build starts, docker client pack all files in the build context into a tarball then transfer the tarball file to the docker daemon
 - By default docker would search for the Dockerfile in the build context path. If not then need to provide a -f option
 - Each RUN command will execute the command on the top writable layer of the container, then commit the container as a new image.
