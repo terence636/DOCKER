@@ -118,7 +118,7 @@ CMD ["echo", "hello terence"]
 - To bypass cache use --no-cache option
 - E.g docker build --no-cache -t <app-name> .
     
-## Docket COPY
+## Docker COPY
 - We can use COPY command to copy our project files into the container
   - e.g then do a npm install to install all dependencies and use the CMD to start the app when container starts
     
@@ -181,7 +181,7 @@ docker run -d -p 5001:5000 --link <redis id> dockerapp:v0.1
 - docker-compose logs -f to tail the logs
 - docker-compose stop without removing the containers
 - docker-compose rm to stop and remove all containers
-- docker-compose up will not build the images if already exist. When changes on Dockerfile and to rebuild image, use docker-compose build
+- **docker-compose up will not build the images if already exist. When changes on Dockerfile and to rebuild image, use docker-compose build**
 
 # Docker Networking
 - 4 types of network
